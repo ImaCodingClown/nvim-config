@@ -2,6 +2,8 @@ vim.opt.guicursor=""
 vim.opt.nu = true
 vim.opt.relativenumber=true
 
+vim.opt.autoread=true
+
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -9,8 +11,10 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false 
-vim.opt.textwidth = 80
+vim.opt.wrap = true 
+vim.opt.wrapmargin=0
+vim.opt.textwidth=0 
+vim.opt.linebreak = true
 
 vim.opt.swapfile=false
 vim.opt.backup=false
@@ -28,9 +32,8 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "+1"
+vim.opt.colorcolumn ="+1" 
 vim.g.mapleader = " "
-vim.opt.clipboard = "unnamedplus"
 if vim.fn.has('wsl') == 1 then
     vim.api.nvim_create_autocmd('TextYankPost', {
         group = vim.api.nvim_create_augroup('Yank', { clear = true }),

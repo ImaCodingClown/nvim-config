@@ -1,5 +1,9 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.NvimTreeFocus)
+vim.keymap.set("n", "<leader>pv", function()
+    local api = require('nvim-tree.api')
+    api.tree.open()
+end
+)
 
 vim.keymap.set("n", "<leader>y", '"+y')
 vim.keymap.set("v", "<leader>y", '"+y')
