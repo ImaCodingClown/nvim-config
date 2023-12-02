@@ -1,17 +1,30 @@
 local lsp = require('lspconfig')
+-- require('mason').setup()
+-- require('mason-lspconfig').setup()
 
 lsp.pylsp.setup {
-    filetypes = {"python"},
-    plugins = {
-        flake8 = {
-            enabled = true,
-            ignore = {},
-            maxLineLength = 160
-        },
-        pylsp_mypy = {enabled = true},
-        isort = {enabled = true},
-        ruff_lsp = {enabled = true},
-    },
+    on_attach = on_attach,
+    settings = {
+        pylsp = {
+            plugins = {
+                flake8 = {
+                    enabled = false,
+                    ignore = {},
+                    maxLineLength = 160
+                },
+                pylsp_mypy = {enabled = true},
+                isort = {enabled = true},
+                ruff_lsp = {enabled = true},
+                ruff = {enabled = true},
+                pydocstyle = {
+                    convention = 'google',
+                    ignore = {
+                        'E501',
+                    }
+                },
+            },
+        }
+    }
 }
 
 lsp.lua_ls.setup {
@@ -26,6 +39,28 @@ lsp.lua_ls.setup {
         }
     }
 }
+
+lsp.rust_analyzer.setup({
+    on_attach=on_attach,
+    settings = {
+        ["rust_analyzer"] = {
+            imports = {
+                granularity = {
+                    group = "module",
+                },
+                prefix = "self",
+            },
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enablue = true
+            },
+        }
+    }
+})
 
 local cmp = require('cmp')
 

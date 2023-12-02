@@ -26,8 +26,14 @@ return require('packer').startup(function(use)
 	use('mbbill/undotree')
 	use('tpope/vim-fugitive')
 	use {
-        'neovim/nvim-lspconfig',             -- Required
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v1.x',
         requires = {
+            -- LSP suppor
+            {"williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            'neovim/nvim-lspconfig'},             -- Required
+
 			-- Autocompletion
 			{'hrsh7th/nvim-cmp'},         -- Required
 			{'hrsh7th/cmp-nvim-lsp'},     -- Required
@@ -63,9 +69,6 @@ return require('packer').startup(function(use)
         config = function()
             require("dadbod").setup {}
         end
-    }
-    use {
-        "petobens/poet-v",
     }
 end)
 
