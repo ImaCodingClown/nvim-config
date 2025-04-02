@@ -3,6 +3,10 @@ vim.opt.nu = true
 vim.opt.relativenumber=true
 
 vim.opt.autoread=true
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { "*" },
+})
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -18,8 +22,6 @@ vim.opt.linebreak = true
 
 vim.opt.swapfile=false
 vim.opt.backup=false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
@@ -33,18 +35,3 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn ="+1" 
-vim.g.mapleader = " "
-if vim.fn.has('wsl') == 1 then
-    vim.api.nvim_create_autocmd('TextYankPost', {
-        group = vim.api.nvim_create_augroup('Yank', { clear = true }),
-        callback = function()
-            vim.fn.system('clip.exe', vim.fn.getreg('"'))
-        end,
-    })
-end
-
-vim.o.autoread = true
-vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
-  command = "if mode() != 'c' | checktime | endif",
-  pattern = { "*" },
-})
