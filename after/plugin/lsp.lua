@@ -1,6 +1,8 @@
 local lsp = require('lspconfig')
 local lsputil = require("lspconfig/util")
 
+vim.lsp.enable({'rust_analyzer'})
+
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local venv_path = os.getenv('VIRTUAL_ENV')
@@ -21,8 +23,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "K", function () vim.lsp.buf.hover() end, opts)
         vim.keymap.set("n", "<leader>vws", function () vim.lsp.buf.workspace_symbol() end, opts)
         vim.keymap.set("n", "<leader>vd", function () vim.diagnostic.open_float() end, opts)
-        vim.keymap.set("n", "[d", function () vim.diagnostic.goto_next() end, opts)
-        vim.keymap.set("n", "]d", function () vim.diagnostic.goto_prev() end, opts)
+        vim.keymap.set("n", "[d", function () vim.diagnostic.jump({count=1, float=true}) end, opts)
+        vim.keymap.set("n", "]d", function () vim.diagnostic.jump({count=-1, float=true}) end, opts)
         vim.keymap.set("n", "<leader>vca", function () vim.lsp.buf.code_action() end, opts)
         vim.keymap.set("n", "<leader>vrr", function () vim.lsp.buf.references() end, opts)
         vim.keymap.set("n", "<leader>vrn", function () vim.lsp.buf.rename() end, opts)
@@ -30,7 +32,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
-require('lspconfig').tsserver.setup{}
+require('lspconfig').ts_ls.setup{}
 
 require('lspconfig').lua_ls.setup({
     capabilities = lsp_capabilities,
@@ -64,54 +66,7 @@ lsp.pyright.setup {
 
 lsp.protols.setup{}
 
--- lsp["pylsp"].setup {
---     enable = false,
---     capabilities = lsp_capabilities,
---     settings = {
---         cmd = { lsputil.path.join(os.getenv("VIRTUAL_ENV"), "bin/pylsp") },
---         cmd_env = {
---             PATH = lsputil.path.join(".venv", "bin") .. ":" .. vim.env.PATH,
---         },
---         pylsp = {
---             configurationSources = {"flake8", "mypy"},
---             plugins = {
---                 pylsp_mypy = {
---                     enabled = true,
---                     overrides = { "--python-executable", py_path, true },
---                 },
---                 pyflakes = { enabled = false },
---                 jedi = { environment = os.getenv("VIRTUAL_ENV") or "/usr" },
---                 isort = {enabled = true},
---                 ruff = {
---                     enabled = true,
---                     ignore = {
---                         'E501'
---                     }
---                 },
---                 pydocstyle = {
---                     enabled = false,
---                     convention = 'google',
---                     ignore = {
---                         'E501',
---                     }
---                 },
---                 pycodestyle = {
---                     enabled = false,
---                     ignore = {
---                         'E501'
---                     }
---                 },
---             },
---         }
---     },
---     on_new_config = function(new_config, new_root_dir)
---         local py = require("utils.python.lua")
---         py.env(new_root_dir)
---         new_config.settings.pylsp.plugins.jedi.environment = py.get_python_dir(new_root_dir)
---     end
--- }
-
-lsp.rust_analyzer.setup({
+vim.lsp.config('rust_analyzer', {
     capabilities = lsp_capabilities,
     settings = {
         ["rust_analyzer"] = {
@@ -141,7 +96,7 @@ vim.diagnostic.config({
     severity_sort = true,
     float = {
         border = 'rounded',
-        source = 'always',
+        source = true,
     },
 })
 

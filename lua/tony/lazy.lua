@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 return require('lazy').setup({
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.4',
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
         dependencies = { {'nvim-lua/plenary.nvim'} }
     },
     {
@@ -31,8 +31,8 @@ return require('lazy').setup({
     {'mbbill/undotree'},
     {'tpope/vim-fugitive'},
     -- LSP suppor
-    {"williamboman/mason.nvim"},
-    {"williamboman/mason-lspconfig.nvim"},
+    -- {"williamboman/mason.nvim"},
+    -- {"williamboman/mason-lspconfig.nvim"},
     {'neovim/nvim-lspconfig'},             -- Required
     { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
     { "folke/neodev.nvim", opts = {} },
